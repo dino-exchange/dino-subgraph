@@ -11,17 +11,22 @@ let ZERO_BD = BigDecimal.fromString("0");
 let EIGHTEEN_BD = BigDecimal.fromString("1e18");
 
 export function handleReferral(event: Referral): void {
-  let user = User.load(event.params._user.toString());
-  if (user === null) {
-    user = new User(event.params._user.toString());
-    user.referrer = event.params._referrer;
-    user.save();
+  let referrer = User.load(event.params._referrer.toHex());
+  if (referrer === null) {
+    referrer = new User(event.params._referrer.toHex());
+    referrer.save();
   }
+  let user = User.load(event.params._user.toHex());
+  if (user === null) {
+    user = new User(event.params._user.toHex());
+  }
+  user.referrer = event.params._referrer;
+  user.save();
   let refereeId = concat(event.params._referrer, event.params._user).toHex();
   let referee = Referee.load(refereeId);
   if (referee === null) {
     referee = new Referee(refereeId);
-    referee.referrer = event.params._referrer.toString();
+    referee.referrer = event.params._referrer.toHex();
     referee.address = event.params._user;
     referee.amount = ZERO_BD;
     referee.createdAt = event.block.timestamp;
@@ -31,17 +36,22 @@ export function handleReferral(event: Referral): void {
 }
 
 export function handleReferralPaid(event: ReferralPaid): void {
-  let user = User.load(event.params._user.toString());
-  if (user === null) {
-    user = new User(event.params._user.toString());
-    user.referrer = event.params._userTo;
-    user.save();
+  let referrer = User.load(event.params._userTo.toHex());
+  if (referrer === null) {
+    referrer = new User(event.params._userTo.toHex());
+    referrer.save();
   }
+  let user = User.load(event.params._user.toHex());
+  if (user === null) {
+    user = new User(event.params._user.toHex());
+  }
+  user.referrer = event.params._userTo;
+  user.save();
   let refereeId = concat(event.params._userTo, event.params._user).toHex();
   let referee = Referee.load(refereeId);
   if (referee === null) {
     referee = new Referee(refereeId);
-    referee.referrer = event.params._userTo.toString();
+    referee.referrer = event.params._userTo.toHex();
     referee.address = event.params._user;
     referee.amount = ZERO_BD;
     referee.createdAt = event.block.timestamp;

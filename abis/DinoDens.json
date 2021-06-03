@@ -95,13 +95,13 @@
             {
                 "indexed": true,
                 "internalType": "address",
-                "name": "_referrer",
+                "name": "_user",
                 "type": "address"
             },
             {
                 "indexed": true,
                 "internalType": "address",
-                "name": "_user",
+                "name": "_referrer",
                 "type": "address"
             }
         ],
