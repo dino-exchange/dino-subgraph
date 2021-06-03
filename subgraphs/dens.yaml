@@ -1,0 +1,29 @@
+specVersion: 0.0.2
+description: DinoDens
+repository: https://github.com/dino-exchange
+schema:
+  file: ./dens.graphql
+dataSources:
+  - kind: ethereum/contract
+    name: DinoDens
+    network: bsc
+    source:
+      address: '0x2e1b0a94a88c6845bb7F9A9861DD4efb79EfAb7F'
+      abi: DinoDens
+      startBlock: 7916681
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.4
+      language: wasm/assemblyscript
+      file: ../src/dens/index.ts
+      entities:
+        - User
+        - Referee
+      abis:
+        - name: DinoDens
+          file: ../abis/DinoDens.json
+      eventHandlers:
+        - event: Referral(indexed address,indexed address)
+          handler: handleReferral
+        - event: ReferralPaid(indexed address,indexed address,uint256)
+          handler: handleReferralPaid

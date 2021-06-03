@@ -1,0 +1,35 @@
+{
+  "name": "dino-subgraph",
+  "description": "DinoExchange Subgraph",
+  "version": "1.0.0",
+  "repository": "git@github.com:dino-exchange/dino-subgraph.git",
+  "author": "DinoExchange",
+  "license": "MIT",
+  "scripts": {
+    "codegen:dens": "graph codegen subgraphs/dens.yaml",
+    "build:dens": "graph build subgraphs/dens.yaml",
+    "deploy:dens": "graph deploy --node https://api.thegraph.com/deploy/ --ipfs https://api.thegraph.com/ipfs/ bakaoh/dens subgraphs/dens.yaml",
+    "format:check": "prettier --check '*/**/*.{js,ts}'",
+    "format:write": "prettier --write '*/**/*.{js,ts}'",
+    "lint": "eslint '*/**/*.{js,ts}'"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "yarn format:write",
+      "commit-msg": "commitlint -E HUSKY_GIT_PARAMS"
+    }
+  },
+  "devDependencies": {
+    "@commitlint/cli": "^12.1.4",
+    "@commitlint/config-conventional": "^12.1.4",
+    "@graphprotocol/graph-cli": "^0.20.0",
+    "@graphprotocol/graph-ts": "^0.20.0",
+    "@typescript-eslint/eslint-plugin": "^4.24.0",
+    "@typescript-eslint/parser": "^4.24.0",
+    "eslint": "^7.27.0",
+    "eslint-config-prettier": "^8.3.0",
+    "husky": "^4.3.8",
+    "prettier": "^2.3.0",
+    "typescript": "^4.2.4"
+  }
+}

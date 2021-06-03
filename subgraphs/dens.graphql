@@ -1,0 +1,21 @@
+type User @entity {
+    # Address
+    id: ID!
+
+    # Referrer address
+    referrer: Bytes!
+
+    # Referees
+    referees: [Referee!]! @derivedFrom(field: "referrer")
+}
+
+type Referee @entity {
+    # Referee address - Referrer address
+    id: ID!
+
+    address: Bytes!
+    referrer: User!
+    amount: BigDecimal!
+    createdAt: BigInt!
+    updatedAt: BigInt!
+}
